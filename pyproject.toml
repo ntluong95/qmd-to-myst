@@ -9,7 +9,7 @@ dependencies = [
     "click==7.1",
     "docutils==0.17",
     "ipykernel>=6.29.5",
-    "markdown-it-py==2.0",
+    "markdown-it-py==3.0.0",
     "mdformat-deflist==0.1.2",
     "mdformat-myst>=0.2.0",
     "mdformat>=0.7.18",
