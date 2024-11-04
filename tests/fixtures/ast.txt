@@ -1,0 +1,641 @@
+inline:
+.
+a *some emphasis* **some bold** b
+c :role:`content` d
+e ``literal`` f
+g Reference_ h
+i `a Phrase`_ j
+k `text <ref_>`_ l
+m anonymous__ n
+o _`Target` p
+q |sub| r
+s [1]_ [#]_ [*]_ t
+u [CIT2002]_ v
+w http://a.net/ x
+y `uri <a.org>`_ z
+
+.. __: anonymous-target
+
+.. [1] normal footnote
+.. [#] auto-number footnote.
+.. [*] auto-symbol footnote.
+.. [a] citation footnote
+   next line
+
+   new paragraph
+.
+<document source="source">
+    <paragraph>
+        a 
+        <emphasis>
+            some emphasis
+         
+        <strong>
+            some bold
+         b
+        c 
+        <RoleNode role="role" text="content">
+         d
+        e 
+        <literal>
+            literal
+         f
+        g 
+        <reference name="Reference" refname="reference">
+            Reference
+         h
+        i 
+        <reference name="a Phrase" refname="a phrase">
+            a Phrase
+         j
+        k 
+        <reference embedded="True" name="text" refname="ref">
+            text
+         l
+        m 
+        <reference anonymous="1" name="anonymous" refuri="anonymous-target">
+            anonymous
+         n
+        o 
+        <target ids="target" inline="True" names="target">
+            Target
+         p
+        q 
+        <substitution_reference refname="sub">
+            sub
+         r
+        s 
+        <footnote_reference ids="footnote-reference-1" refid="footnote-1">
+            1
+         
+        <footnote_reference auto="1" ids="footnote-reference-2" refid="footnote-2">
+            2
+         
+        <footnote_reference auto="*" ids="footnote-reference-3" refid="footnote-3">
+            *
+         t
+        u 
+        <citation_reference ids="citation-reference-1" refname="cit2002">
+            CIT2002
+         v
+        w 
+        <reference refuri="http://a.net/" standalone_uri="True">
+            http://a.net/
+         x
+        y 
+        <reference embedded="True" name="uri" refuri="a.org">
+            uri
+         z
+    <target anonymous="1" ids="target-1" refuri="anonymous-target">
+    <footnote backrefs="footnote-reference-1" ids="footnote-1" names="1">
+        <paragraph>
+            normal footnote
+    <footnote auto="1" backrefs="footnote-reference-2" ids="footnote-2" names="2">
+        <paragraph>
+            auto-number footnote.
+    <footnote auto="*" backrefs="footnote-reference-3" ids="footnote-3">
+        <paragraph>
+            auto-symbol footnote.
+    <citation ids="a" names="a">
+        <paragraph>
+            citation footnote
+            next line
+        <paragraph>
+            new paragraph
+.
+
+role-backslash:
+.
+:math:`\sigma`
+.
+<document source="source">
+    <paragraph>
+        <RoleNode role="math" text="\sigma">
+.
+
+titles:
+.
+header 1
+========
+
+header 2a
+---------
+
+header 3
+........
+
+header 2b
+---------
+
+.
+<document source="source">
+    <section ids="header-1" names="header\ 1">
+        <title level="1">
+            header 1
+        <section ids="header-2a" names="header\ 2a">
+            <title level="2">
+                header 2a
+            <section ids="header-3" names="header\ 3">
+                <title level="3">
+                    header 3
+        <section ids="header-2b" names="header\ 2b">
+            <title level="2">
+                header 2b
+.
+
+targets:
+.
+.. _Python: http://www.python.org/
+
+.. _example:
+
+This is an example cross-reference target.
+.
+<document source="source">
+    <target ids="python" names="python" refuri="http://www.python.org/">
+    <target refid="example">
+    <paragraph ids="example" names="example">
+        This is an example cross-reference target.
+.
+
+roles:
+.
+:a:`b` :c:`d` `f`:e:
+:xyz:`123`
+.
+<document source="source">
+    <paragraph>
+        <RoleNode role="a" text="b">
+         
+        <RoleNode role="c" text="d">
+         
+        <RoleNode role="e" text="f">
+        
+        <RoleNode role="xyz" text="123">
+.
+
+directive-eval-rst:
+.
+.. name:: argument
+
+.. xyz::
+  :opt: value
+
+.. lmp::
+
+   content
+
+   .. sdf::
+
+      other
+
+.. hij:: argument
+    :opt: value1
+    :opt2: value2
+
+.. hij:: argument
+    :opt: value1
+    :opt2: value2
+
+    content
+
+.
+<document source="source">
+    <EvalRstNode indent="0" name="name">
+        .. name:: argument
+    <EvalRstNode indent="2" name="xyz">
+        .. xyz::
+          :opt: value
+    <EvalRstNode indent="3" name="lmp">
+        .. lmp::
+        
+           content
+        
+           .. sdf::
+        
+              other
+    <EvalRstNode indent="4" name="hij">
+        .. hij:: argument
+            :opt: value1
+            :opt2: value2
+    <EvalRstNode indent="4" name="hij">
+        .. hij:: argument
+            :opt: value1
+            :opt2: value2
+        
+            content
+
+.
+
+directive-admonition:
+.
+
+.. admonition:: Abc *d*
+   :class: xyz
+   :name: df
+
+   A *b*
+
+   .. note::
+
+     lmn
+
+.. note::
+
+    .. tip::
+
+        Content
+
+    .. unknown:: arg_block
+
+        content
+.
+<document source="source">
+    <DirectiveNode conversion="parse_all" module="docutils.parsers.rst.directives.admonitions.Admonition" name="admonition" options_list="('class',\ 'xyz') ('name',\ 'df')">
+        <ArgumentNode>
+            Abc 
+            <emphasis>
+                d
+        <ContentNode>
+            <paragraph>
+                A 
+                <emphasis>
+                    b
+            <DirectiveNode conversion="parse_content" module="docutils.parsers.rst.directives.admonitions.Note" name="note" options_list="">
+                <ContentNode>
+                    <paragraph>
+                        lmn
+    <DirectiveNode conversion="parse_content" module="docutils.parsers.rst.directives.admonitions.Note" name="note" options_list="">
+        <ContentNode>
+            <DirectiveNode conversion="parse_content" module="docutils.parsers.rst.directives.admonitions.Tip" name="tip" options_list="">
+                <ContentNode>
+                    <paragraph>
+                        Content
+            <EvalRstNode indent="4" name="unknown">
+                .. unknown:: arg_block
+                
+                    content
+
+.
+
+transition:
+.
+----
+.
+<document source="source">
+    <transition>
+.
+
+front-matter:
+.
+:Authors:
+    Tony J. (Tibs) Ibbs,
+    David Goodger
+
+    (and sundry other good-natured folks)
+
+:Version: 1.0 of 2001/08/08
+:Dedication: To my father.
+:orphan:
+.
+<document source="source">
+    <FrontMatterNode>
+        <field>
+            <field_name>
+                Authors
+            <field_body>
+                <paragraph>
+                    Tony J. (Tibs) Ibbs,
+                    David Goodger
+                <paragraph>
+                    (and sundry other good-natured folks)
+        <field>
+            <field_name>
+                Version
+            <field_body>
+                <paragraph>
+                    1.0 of 2001/08/08
+        <field>
+            <field_name>
+                Dedication
+            <field_body>
+                <paragraph>
+                    To my father.
+        <field>
+            <field_name>
+                orphan
+            <field_body>
+.
+
+full:
+.
+.. _a-link:
+
+title
+=====
+
+`a-link`_
+
+sub-title
+---------
+
+:abc:`xyz`
+
+.. abc:: x
+    :a: b
+
+    abc
+
+.. xyz:: lkjhlkj
+
+|x|
+
+.. |name| replace:: replacement *text*
+
+.. |caution| image:: warning.png
+             :alt: Warning!
+
+a
+  b
+
+.. This is a comment.
+
+- a
+- b
+
+  * c
+
+1. a
+2. b
+
+   1. c
+
+.. [#f1] Text of the first footnote.
+
+.. [Ref] Book or article reference, URL or whatever.
+
+:fieldname a: Field content
+
+Block quotes are just:
+
+    Indented
+
+    paragraphs
+
+        and they
+        may nest.
+
+        -- attribution
+
+    - with
+    - bullet list
+
+    1. with
+    2. enumerated list
+.
+<document source="source">
+    <target refid="a-link">
+    <section ids="title a-link" names="title a-link">
+        <title level="1">
+            title
+        <paragraph>
+            <reference name="a-link" refname="a-link">
+                a-link
+        <section ids="sub-title" names="sub-title">
+            <title level="2">
+                sub-title
+            <paragraph>
+                <RoleNode role="abc" text="xyz">
+            <EvalRstNode indent="4" name="abc">
+                .. abc:: x
+                    :a: b
+                
+                    abc
+            <EvalRstNode indent="0" name="xyz">
+                .. xyz:: lkjhlkj
+            <paragraph>
+                <substitution_reference refname="x">
+                    x
+            <substitution_definition names="name">
+                <DirectiveNode conversion="parse_content" module="docutils.parsers.rst.directives.misc.Replace" name="replace" options_list="">
+                    <ContentNode>
+                        <paragraph>
+                            replacement 
+                            <emphasis>
+                                text
+            <substitution_definition names="caution">
+                <DirectiveNode conversion="direct" module="docutils.parsers.rst.directives.images.Image" name="image" options_list="('alt',\ 'Warning!')">
+                    <ArgumentNode>
+                        warning.png
+            <definition_list>
+                <definition_list_item>
+                    <term>
+                        a
+                    <definition>
+                        <paragraph>
+                            b
+            <comment xml:space="preserve">
+                This is a comment.
+            <bullet_list bullet="-">
+                <list_item prefix="- " style="bullet">
+                    <paragraph>
+                        a
+                <list_item prefix="- " style="bullet">
+                    <paragraph>
+                        b
+                    <bullet_list bullet="*">
+                        <list_item prefix="* " style="bullet">
+                            <paragraph>
+                                c
+            <enumerated_list enumtype="arabic" prefix="" suffix=".">
+                <list_item prefix="1. " style="enumerated">
+                    <paragraph>
+                        a
+                <list_item prefix="2. " style="enumerated">
+                    <paragraph>
+                        b
+                    <enumerated_list enumtype="arabic" prefix="" suffix=".">
+                        <list_item prefix="1. " style="enumerated">
+                            <paragraph>
+                                c
+            <footnote auto="1" ids="f1" names="f1">
+                <paragraph>
+                    Text of the first footnote.
+            <citation ids="ref" names="ref">
+                <paragraph>
+                    Book or article reference, URL or whatever.
+            <field_list>
+                <field>
+                    <field_name>
+                        fieldname a
+                    <field_body>
+                        <paragraph>
+                            Field content
+            <paragraph>
+                Block quotes are just:
+            <block_quote>
+                <paragraph>
+                    Indented
+                <paragraph>
+                    paragraphs
+                <block_quote>
+                    <paragraph>
+                        and they
+                        may nest.
+                    <attribution>
+                        attribution
+                <bullet_list bullet="-">
+                    <list_item prefix="- " style="bullet">
+                        <paragraph>
+                            with
+                    <list_item prefix="- " style="bullet">
+                        <paragraph>
+                            bullet list
+                <enumerated_list enumtype="arabic" prefix="" suffix=".">
+                    <list_item prefix="1. " style="enumerated">
+                        <paragraph>
+                            with
+                    <list_item prefix="2. " style="enumerated">
+                        <paragraph>
+                            enumerated list
+
+.
+
+tables-simple:
+.
+=====  =====  =======
+     AB1      C1
+------------  -------
+A2     B2     C2
+=====  =====  =======
+False  False  False
+True   False  False
+False  True   False
+True   True   True
+=====  =====  =======
+.
+<document source="source">
+    <table>
+        <tgroup cols="3">
+            <colspec colwidth="5">
+            <colspec colwidth="5">
+            <colspec colwidth="7">
+            <thead>
+                <row>
+                    <entry morecols="1">
+                    <entry>
+                <row>
+                    <entry>
+                        <paragraph>
+                            A2
+                    <entry>
+                        <paragraph>
+                            B2
+                    <entry>
+                        <paragraph>
+                            C2
+            <tbody>
+                <row>
+                    <entry>
+                        <paragraph>
+                            False
+                    <entry>
+                        <paragraph>
+                            False
+                    <entry>
+                        <paragraph>
+                            False
+                <row>
+                    <entry>
+                        <paragraph>
+                            True
+                    <entry>
+                        <paragraph>
+                            False
+                    <entry>
+                        <paragraph>
+                            False
+                <row>
+                    <entry>
+                        <paragraph>
+                            False
+                    <entry>
+                        <paragraph>
+                            True
+                    <entry>
+                        <paragraph>
+                            False
+                <row>
+                    <entry>
+                        <paragraph>
+                            True
+                    <entry>
+                        <paragraph>
+                            True
+                    <entry>
+                        <paragraph>
+                            True
+
+.
+
+tables-grid:
+.
++------------------------+------------+----------+----------+
+| Header row, column 1   | Header 2   | Header 3 | Header 4 |
+| (header rows optional) |            |          |          |
++========================+============+==========+==========+
+| body row 1, column 1   | col 1,2    | col 1,3  | col 1,4  |
++------------------------+------------+----------+----------+
+| body row 2             | col 2,2    | col 2,3  | col 2,4  |
++------------------------+------------+----------+----------+
+.
+<document source="source">
+    <table>
+        <tgroup cols="4">
+            <colspec colwidth="24">
+            <colspec colwidth="12">
+            <colspec colwidth="10">
+            <colspec colwidth="10">
+            <thead>
+                <row>
+                    <entry>
+                        <paragraph>
+                            Header row, column 1
+                            (header rows optional)
+                    <entry>
+                        <paragraph>
+                            Header 2
+                    <entry>
+                        <paragraph>
+                            Header 3
+                    <entry>
+                        <paragraph>
+                            Header 4
+            <tbody>
+                <row>
+                    <entry>
+                        <paragraph>
+                            body row 1, column 1
+                    <entry>
+                        <paragraph>
+                            col 1,2
+                    <entry>
+                        <paragraph>
+                            col 1,3
+                    <entry>
+                        <paragraph>
+                            col 1,4
+                <row>
+                    <entry>
+                        <paragraph>
+                            body row 2
+                    <entry>
+                        <paragraph>
+                            col 2,2
+                    <entry>
+                        <paragraph>
+                            col 2,3
+                    <entry>
+                        <paragraph>
+                            col 2,4
+.

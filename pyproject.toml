@@ -1,0 +1,37 @@
+[project]
+name = "qmd-to-myst"
+version = "0.1.0"
+description = "Convert QMD to MyST markdown"
+authors = [{name = "Luong Nguyen Thanh", email = "ph.ntluong95@gmail.com"}]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "click==7.1",
+    "docutils==0.17",
+    "ipykernel>=6.29.5",
+    "markdown-it-py==2.0",
+    "mdformat-deflist==0.1.2",
+    "mdformat-myst>=0.2.0",
+    "mdformat>=0.7.18",
+    "myst-parser>=1.0.0",
+    "pip>=24.3.1",
+    "pyyaml>=6.0.2",
+]
+
+
+homepage = "https://github.com/ntluong95/qmd-to-myst"
+documentation = "https://qmd-to-myst.readthedocs.io"
+keywords = ["quarto", "markdown", "myst"]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.6.4",
+    "pytest-cov>=6.0.0",
+    "pytest-param-files>=0.6.0",
+    "pytest-regressions>=2.5.0",
+    "pytest>=8.3.3",
+]
+
+
+
+
