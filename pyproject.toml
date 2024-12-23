@@ -6,7 +6,7 @@ authors = [{name = "Luong Nguyen Thanh", email = "ph.ntluong95@gmail.com"}]
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "click==7.1",
+    "click==8.1.8",
     "docutils==0.17",
     "ipykernel>=6.29.5",
     "markdown-it-py==2.0",
